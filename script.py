@@ -72,8 +72,12 @@ def draw_lines():
     for x in range(0, FIELD_WIDTH ):
         rgb_array[x * ( IMAGE_WIDTH // FIELD_WIDTH ) , : , :] = 0
 
+    # horizontal shadow
+    rgb_array[: , FIELD_LENGTH * ( IMAGE_HEIGHT // FIELD_LENGTH ) : IMAGE_WIDTH , :] = 0
+
+    # vertical shadow
+    rgb_array[ FIELD_WIDTH * ( IMAGE_WIDTH // FIELD_WIDTH ) : IMAGE_WIDTH , : , :] = 0
+
 #################### Main
 if __name__ == '__main__':
-    draw_image(("A7" , "F9" , "C3" , "J5"), ("K2" , "D8", "H8" , "L9"))
-
-    #  , "B4"
+    draw_image(("A7" , "F9" , "C3" , "J5"), ("K2" , "D8", "H8" , "L12"))
