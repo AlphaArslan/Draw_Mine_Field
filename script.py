@@ -24,7 +24,7 @@ IMAGE_WIDTH     = 512
 IMAGE_HEIGHT    = 512
 
 rgb_array = np.zeros((IMAGE_WIDTH, IMAGE_HEIGHT, 3), 'uint8')
-rgb_array[...] = 255 
+rgb_array[...] = 255                            # white background
 
 #################### FUNCTION
 def draw_image(mine_locations):
@@ -32,16 +32,19 @@ def draw_image(mine_locations):
         y = ord(location[0])-ord('A') + 1
         x = ord(location[1]) - 48               # ord('1') = 49
         draw_pixels(x,y)
+
+    draw_lines()
     img = Image.fromarray(rgb_array)
     img.save(IMAGE_PATH)
 
+
 def draw_pixels(x,y):                           # coordinates of mine square
     #pixel coordinates
-    x_start_pixel = (x-1) * int(IMAGE_WIDTH/WIDTH)
-    x_end_pixel = (x) * int(IMAGE_WIDTH/WIDTH)
+    x_start_pixel = (x-1) * ( IMAGE_WIDTH // WIDTH )
+    x_end_pixel = x * ( IMAGE_WIDTH // WIDTH )
 
-    y_start_pixel = (y-1) * int(IMAGE_HEIGHT/LENGTH)
-    y_end_pixel = (y) * int(IMAGE_HEIGHT/LENGTH)
+    y_start_pixel = (y-1) * ( IMAGE_HEIGHT // LENGTH )
+    y_end_pixel = y * ( IMAGE_HEIGHT // LENGTH )
 
     # red channel
     rgb_array[x_start_pixel:x_end_pixel , y_start_pixel:y_end_pixel, 0] = MINE_COLOR[0]
@@ -51,6 +54,16 @@ def draw_pixels(x,y):                           # coordinates of mine square
 
     # blue channel
     rgb_array[x_start_pixel:x_end_pixel , y_start_pixel:y_end_pixel, 2] = MINE_COLOR[2]
+
+
+def draw_lines():
+    # horizontal
+    for y in range(0, LENGTH ):
+        rgb_array[: , y * ( IMAGE_HEIGHT // LENGTH ) , :] = 0
+
+    # vertical
+    for x in range(0, WIDTH ):
+        rgb_array[x * ( IMAGE_WIDTH // WIDTH ) , : , :] = 0
 
 #################### Main
 if __name__ == '__main__':
