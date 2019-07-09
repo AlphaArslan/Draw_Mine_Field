@@ -30,7 +30,7 @@ rgb_array[...] = 255                            # white background
 def draw_image(mine_locations):
     for location in mine_locations:
         y = ord(location[0])-ord('A') + 1
-        x = ord(location[1]) - 48               # ord('1') = 49
+        x = int(location[1:])
         draw_pixels(x,y)
 
     draw_lines()
